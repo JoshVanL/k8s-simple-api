@@ -1,0 +1,7 @@
+apiVersion: simple.k8s.co/v1alpha1
+kind: Message
+metadata:
+  name: cncf-test-message
+spec:
+  body: "This is a body for testing"
+  header: "This is a header for testing"
