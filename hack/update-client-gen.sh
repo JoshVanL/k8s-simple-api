@@ -6,7 +6,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-REPO_ROOT=$(dirname "${BASH_SOURCE}")/..
+REPO_ROOT=$GOPATH/src/github.com/joshvanl/k8s-simple-api
 BINDIR=${REPO_ROOT}/bin
 
 # Generate the internal clientset (pkg/client/clientset_generated/internalclientset)

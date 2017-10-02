@@ -5,6 +5,7 @@ import (
 )
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
 type Message struct {
 	metav1.TypeMeta
 	metav1.ObjectMeta
@@ -19,12 +20,12 @@ type MessageList struct {
 	metav1.TypeMeta
 	metav1.ObjectMeta
 
-	Messages []Message
+	Items []Message
 }
 
 type MessageSpec struct {
-	Header  string
-	Message string
+	Header string
+	Body   string
 }
 
 type MessageStatus struct {

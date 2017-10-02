@@ -1,16 +1,12 @@
-FILENAME := k8s-simple-api
-PACKAGE_NAME := github.com/joshvanl/$(FILENAME)
+PACKAGE_NAME := github.com/joshvanl/k8s-simple-api
 
+# A temporary directory to store generator executors in
 BINDIR ?= bin
 GOPATH ?= $HOME/go
 HACK_DIR ?= hack
 
 # A list of all types.go files in pkg/apis
 TYPES_FILES = $(shell find pkg/apis -name types.go)
-
-
-build:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o $(FILENAME)
 
 # This step pulls the Kubernetes repo so we can build generators in another
 # target. Soon, github.com/kubernetes/kube-gen will be live meaning we don't
@@ -54,6 +50,7 @@ $(BINDIR)/informer-gen:
 	go build -o $@ k8s.io/kubernetes/cmd/libs/go2idl/informer-gen
 #################################################
 
+
 # This target runs all required generators against our API types.
 generate: .generate_exes $(TYPES_FILES)
 	# Generate defaults
@@ -71,13 +68,13 @@ generate: .generate_exes $(TYPES_FILES)
 		--go-header-file "$${GOPATH}/src/github.com/kubernetes/repo-infra/verify/boilerplate/boilerplate.go.txt" \
 		--input-dirs "$(PACKAGE_NAME)/pkg/apis/simple" \
 		--input-dirs "$(PACKAGE_NAME)/pkg/apis/simple/v1alpha1" \
-		--output-file-base zz_generated.deepcopy
+		--output-file-base "zz_generated.deepcopy"
 	# Generate conversions
 	$(BINDIR)/conversion-gen \
 		--v 1 --logtostderr \
 		--go-header-file "$${GOPATH}/src/github.com/kubernetes/repo-infra/verify/boilerplate/boilerplate.go.txt" \
 		--input-dirs "$(PACKAGE_NAME)/pkg/apis/simple" \
 		--input-dirs "$(PACKAGE_NAME)/pkg/apis/simple/v1alpha1" \
-		--output-file-base zz_generated.conversion
+		--output-file-base "zz_generated.conversion"
 	# generate all pkg/client contents
 	$(HACK_DIR)/update-client-gen.sh

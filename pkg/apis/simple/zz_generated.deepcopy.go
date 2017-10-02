@@ -88,8 +88,8 @@ func (in *MessageList) DeepCopyInto(out *MessageList) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
 	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-	if in.Messages != nil {
-		in, out := &in.Messages, &out.Messages
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
 		*out = make([]Message, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])

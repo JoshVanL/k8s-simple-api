@@ -23,12 +23,12 @@ type MessageList struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Messages []Message `json:"message"`
+	Items []Message `json:"items"`
 }
 
 type MessageSpec struct {
-	Header  string `json:"header"`
-	Message string `json:"message"`
+	Header string `json:"header"`
+	Body   string `json:"body"`
 }
 
 type MessageStatus struct {
